@@ -36,6 +36,8 @@ namespace GradDesc
                     }
                 }
             }
+            
+            #region error handling
             catch (FileNotFoundException fnfe)
             {
                 Console.WriteLine("File not found. Please check your file path. Error details:");
@@ -72,9 +74,12 @@ namespace GradDesc
                 Console.Clear();
                 Setup();
             }
-            
+            #endregion
+                
             Console.Write("Data successfully parsed.\nChoose a learning rate [You probably shouldn't exceed 0.01]: ");
             string response = Console.ReadLine();
+            
+            #region stupid user handling
             while (!double.TryParse(response, out alpha))
             {
                 Console.Write("Input was not a double. Try again, choose a learning rate: ");
@@ -90,8 +95,13 @@ namespace GradDesc
                 Console.WriteLine("Ok, a little small, don't you think? Let's just stick with 0.000001.");
                 alpha = 0.000001;
             }
+            #endregion
+                
+                
             Console.Write("\nLearning rate is {0}. Choose a # of iterations [For best results, a minimum of 5000 is recommended]: ", alpha);
             response = Console.ReadLine();
+            
+            #region more stupid user handling
             while (!int.TryParse(response, out numIterations))
             {
                 Console.Write("Input was not an integer. Try again, choose a number of iterations: ");
@@ -107,8 +117,11 @@ namespace GradDesc
                 Console.WriteLine("Capping number of iterations at a million.");
                 numIterations = 1000000;
             }
+            #endregion 
+                
             Regression();       
         }
+        
         static void Regression()
         {
             Console.WriteLine("Press enter to start gradient descent algorithm.");
@@ -118,7 +131,7 @@ namespace GradDesc
             for (int i = 0; i < numIterations; i++)
             {
                 errorVal = 0;
-                for (int j = 0; j < Xs.Count; j++)
+                for (int j = 0; j < Xs.Count; j++) //subtracting partial derivative of cost function with respect to theta
                 {
                     temp0 = theta0 - alpha * error(Xs[j], Ys[j]);
                     temp1 = theta1 - alpha * error(Xs[j], Ys[j]) * Xs[j] / Xs.Max();
@@ -150,7 +163,7 @@ namespace GradDesc
             Setup();
         }
 
-        static double error(double x, double y)
+        static double error(double x, double y) 
         { return hypothesis(x) - y; }
         
         static double hypothesis(double x)
