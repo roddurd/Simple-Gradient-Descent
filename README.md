@@ -1,5 +1,5 @@
 # Simple-Gradient-Descent
-A simple implementation of gradient descent for modeling first or second order polynomial functions.
+A simple implementation of nonlinear regression for modeling first or second order polynomial functions via gradient descent.
 
 
 As explained in the program, data files should have one value pair (X,Y) per line.
