@@ -151,7 +151,7 @@ namespace GradDesc
                 bestmodel += (theta2 != 0) ? theta2 + "x^2 + " : ""; //exclude if not applicable
             else
                 bestmodel += "x^2 + ";
-            if (theta2 != 1)
+            if (theta1 != 1)
                 bestmodel += (theta1 != 0) ? theta1 + "x + " : "";
             else
                 bestmodel += "x + ";            
