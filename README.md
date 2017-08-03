@@ -22,6 +22,8 @@ Objectively, assuming the learning rate is sufficiently small, the greater the n
 For a rule of thumb: linear functions should converge closely enough within 10000 iterations.
 With each increase in order of the polynomial, the number of iterations should increase by half an order of magnitude (the program caps at 1 million iterations).
 
+<font color="red"><i>Note: these rules might suck. Mess around with parameters for yourself and see what works best.</i></font>
+
 <h2><b>Contacting me</b></h2>
 
 If you have any questions, for whatever reason, email me at roddurd@gmail.com
