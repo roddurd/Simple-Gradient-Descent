@@ -1,0 +1,18 @@
+*This is a sample data file
+*Oh yeah, * is for comments
+*These values correspond to y= 2x^4 - x^3 + 5x - 10
+*Some good params I found for this particular dataset:
+*alpha = 0.00003
+*number of iterations = 400000
+*C:\Users\roddur.dasgupta\Desktop\sampledata.txt
+1,-4 
+2,24
+3,140
+4,458
+5,1140
+6,2396
+7,4484
+8,7710
+9,12428
+10,19040
+
