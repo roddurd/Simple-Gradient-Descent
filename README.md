@@ -8,7 +8,7 @@ X and Y values should be separated by a comma, space, or tab.
 This is just a toy program to help solidify my understanding of gradient descent as I learn.
 This is not meant to be a super accurate program.
 
-<head><b>Choosing good parameters</b></head>
+<h2><b>Choosing good parameters</b></h2>
 
 <i><b>Learning rate</b></i>
 
