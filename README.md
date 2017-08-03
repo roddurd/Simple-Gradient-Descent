@@ -11,10 +11,12 @@ This is not meant to be a super accurate program.
 <b>Choosing good parameters</b>
 
 <i>Learning rate</i>
+
 A good rule of thumb: For linear functions, an alpha lying within 0.001 < a < 0.01 should suffice.
 With each increase in order of the polynomial, the range of alpha should decrease by an order of magnitude.
 
 <i>Number of iterations</i>
+
 Objectively, assuming the learning rate is sufficiently small, the greater number of iterations the better.
 For a rule of thumb: linear functions should converge closely enough within 10000 iterations.
 With each increase in order of the polynomial, the number of iterations should increase by an order of magnitude (the program caps at 1 million iterations).
