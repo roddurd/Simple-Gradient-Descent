@@ -8,7 +8,7 @@ X and Y values should be separated by a comma, space, or tab.
 This is just a toy program to help solidify my understanding of gradient descent as I learn.
 This is not meant to be a super accurate program.
 
-<h2><b>Choosing good parameters</b></h2>
+<h2><b>Choosing good parameters*</b></h2>
 
 <i><b>Learning rate</b></i>
 
@@ -22,7 +22,7 @@ Objectively, assuming the learning rate is sufficiently small, the greater the n
 For a rule of thumb: linear functions should converge closely enough within 10000 iterations.
 With each increase in order of the polynomial, the number of iterations should increase by half an order of magnitude (the program caps at 1 million iterations).
 
-<font color="red"><i>Note: these rules might suck. Mess around with parameters for yourself and see what works best.</i></font>
+<i>*Note: these rules might suck. Mess around with parameters for yourself and see what works best.</i>
 
 <h2><b>Contacting me</b></h2>
 
