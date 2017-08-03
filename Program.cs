@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace GradDesc
@@ -11,14 +9,14 @@ namespace GradDesc
     {        
         static List<double> Xs = new List<double>();
         static List<double> Ys = new List<double>();
-        static double theta0 = 0, theta1 = 0, theta2 = 0, alpha = 0.01, errorVal=0;
+        static double theta0 = 0, theta1 = 0, theta2 = 0, theta3=0, alpha = 0.01, errorVal=0;
         static int numIterations = 5000;
         static void Main(string[] args)
         {
             Setup();
         }
         static void Setup()
-        {
+        {            
             Console.ForegroundColor = ConsoleColor.DarkGray; // ~ a e s t h e t i c s ~
             Console.WriteLine("Write the file path to your data. Each line is considered an input/output pair.\nX and Y values must be separated by either a comma, space, OR tab (cannot be more than one).");
             Console.Write("\nExample Path: C:\\Users\\roddur.dasgupta\\Desktop\\data.txt\n\tPath: ");
@@ -36,8 +34,6 @@ namespace GradDesc
                     }
                 }
             }
-            
-            #region error handling
             catch (FileNotFoundException fnfe)
             {
                 Console.WriteLine("File not found. Please check your file path. Error details:");
@@ -74,12 +70,9 @@ namespace GradDesc
                 Console.Clear();
                 Setup();
             }
-            #endregion
-                
+            
             Console.Write("Data successfully parsed.\nChoose a learning rate [You probably shouldn't exceed 0.01]: ");
             string response = Console.ReadLine();
-            
-            #region stupid user handling
             while (!double.TryParse(response, out alpha))
             {
                 Console.Write("Input was not a double. Try again, choose a learning rate: ");
@@ -95,13 +88,8 @@ namespace GradDesc
                 Console.WriteLine("Ok, a little small, don't you think? Let's just stick with 0.000001.");
                 alpha = 0.000001;
             }
-            #endregion
-                
-                
             Console.Write("\nLearning rate is {0}. Choose a # of iterations [For best results, a minimum of 5000 is recommended]: ", alpha);
             response = Console.ReadLine();
-            
-            #region more stupid user handling
             while (!int.TryParse(response, out numIterations))
             {
                 Console.Write("Input was not an integer. Try again, choose a number of iterations: ");
@@ -117,38 +105,43 @@ namespace GradDesc
                 Console.WriteLine("Capping number of iterations at a million.");
                 numIterations = 1000000;
             }
-            #endregion 
-                
             Regression();       
         }
-        
         static void Regression()
         {
             Console.WriteLine("Press enter to start gradient descent algorithm.");
             Console.ReadLine();
 
-            double temp0 = 0, temp1 = 0, temp2 = 0;
+            double temp0 = 0, temp1 = 0, temp2 = 0, temp3 = 0;
             for (int i = 0; i < numIterations; i++)
             {
                 errorVal = 0;
-                for (int j = 0; j < Xs.Count; j++) //subtracting partial derivative of cost function with respect to theta
+                for (int j = 0; j < Xs.Count; j++)
                 {
                     temp0 = theta0 - alpha * error(Xs[j], Ys[j]);
                     temp1 = theta1 - alpha * error(Xs[j], Ys[j]) * Xs[j] / Xs.Max();
-                    temp2 = theta2 - alpha * error(Xs[j], Ys[j]) * Xs[j] * Xs[j] / Math.Pow(Xs.Max(), 2);                    
+                    temp2 = theta2 - alpha * error(Xs[j], Ys[j]) * Xs[j] * Xs[j] / Math.Pow(Xs.Max(), 2);
+                    temp3 = theta3 - alpha * error(Xs[j], Ys[j]) * Math.Pow(Xs[j],3) / Math.Pow(Xs.Max(), 3);
                     theta0 = temp0;
                     theta1 = temp1;
                     theta2 = temp2;
+                    theta3 = temp3;
                     errorVal += error(Xs[j], Ys[j]);
-                }                
-                Console.WriteLine("theta0: {0}\ttheta1: {1}\ntheta2: {2}\terror: {3}", theta0, theta1, theta2, errorVal);              
+                }
+                errorVal = errorVal / Xs.Count;
+                Console.WriteLine("theta0: {0}\ttheta1: {1}\ntheta2: {2}\ttheta3: {3}\nerror: {4}", theta0, theta1, theta2, theta3, errorVal);              
             }
             string bestmodel = "Best model: ";
+            theta3 = Math.Round(theta3);
             theta2 = Math.Round(theta2);
             theta1 = Math.Round(theta1);
             theta0 = Math.Round(theta0);
-            if (theta2 != 1) //for the aesthetics of x^2 instead of 1x^2
-                bestmodel += (theta2 != 0) ? theta2 + "x^2 + " : ""; //exclude if not applicable
+            if (theta3 != 1) //for the aesthetics of x^3 instead of 1x^3
+                bestmodel += (theta3 != 0) ? theta3 + "x^3 + " : ""; //exclude if theta3=0
+            else
+                bestmodel += "x^3 + ";
+            if (theta2 != 1) 
+                bestmodel += (theta2 != 0) ? theta2 + "x^2 + " : ""; 
             else
                 bestmodel += "x^2 + ";
             if (theta1 != 1)
@@ -158,16 +151,16 @@ namespace GradDesc
             bestmodel += (theta0 != 0) ? theta0 + "" : "0";
             Console.WriteLine(bestmodel);
             Console.WriteLine("Average error rate: " + errorVal / Xs.Count);
-            Console.WriteLine("Press enter if you want to apply linear regression to another data file!");
+            Console.WriteLine("Press enter if you want to apply nonlinear regression to another data file!");
             Console.ReadLine();
             Setup();
         }
 
-        static double error(double x, double y) 
+        static double error(double x, double y)
         { return hypothesis(x) - y; }
         
         static double hypothesis(double x)
-        {return theta2 * Math.Pow(x, 2) + theta1 * x + theta0;}
+        {return theta3 * Math.Pow(x, 3) + theta2 * Math.Pow(x, 2) + theta1 * x + theta0;}
 
     }
 }
