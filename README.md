@@ -17,8 +17,8 @@ With each increase in order of the polynomial, the range of alpha should decreas
 
 <i>Number of iterations</i>
 
-Objectively, assuming the learning rate is sufficiently small, the greater number of iterations the better.
+Objectively, assuming the learning rate is sufficiently small, the greater the number of iterations the better.
 For a rule of thumb: linear functions should converge closely enough within 10000 iterations.
-With each increase in order of the polynomial, the number of iterations should increase by an order of magnitude (the program caps at 1 million iterations).
+With each increase in order of the polynomial, the number of iterations should increase by half an order of magnitude (the program caps at 1 million iterations).
 
 If you have any questions, for whatever reason, email me at roddurd@gmail.com
