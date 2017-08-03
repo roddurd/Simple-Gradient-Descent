@@ -118,6 +118,7 @@ namespace GradDesc
                 errorVal = 0;
                 for (int j = 0; j < Xs.Count; j++)
                 {
+                    
                     temp0 = theta0 - alpha * error(Xs[j], Ys[j]);
                     temp1 = theta1 - alpha * error(Xs[j], Ys[j]) * Xs[j] / Xs.Max();
                     temp2 = theta2 - alpha * error(Xs[j], Ys[j]) * Xs[j] * Xs[j] / Math.Pow(Xs.Max(), 2);
@@ -136,21 +137,78 @@ namespace GradDesc
             theta2 = Math.Round(theta2);
             theta1 = Math.Round(theta1);
             theta0 = Math.Round(theta0);
-            if (theta3 != 1) //for the aesthetics of x^3 instead of 1x^3
-                bestmodel += (theta3 != 0) ? theta3 + "x^3 + " : ""; //exclude if theta3=0
-            else
-                bestmodel += "x^3 + ";
-            if (theta2 != 1) 
-                bestmodel += (theta2 != 0) ? theta2 + "x^2 + " : ""; 
-            else
-                bestmodel += "x^2 + ";
-            if (theta1 != 1)
-                bestmodel += (theta1 != 0) ? theta1 + "x + " : "";
-            else
-                bestmodel += "x + ";            
-            bestmodel += (theta0 != 0) ? theta0 + "" : "0";
+
+            #region aesthetics
+            switch (theta3)
+            {
+                case -1:
+                    bestmodel += "-x^3";
+                    break;               
+                case 1:
+                    bestmodel += "x^3";
+                    break;
+                case 0:
+                    break;
+                default:
+                    bestmodel += theta3 + "x^3";
+                    break;
+            }
+            switch (theta2)
+            {
+                case -1:
+                    bestmodel += "-x^2";
+                    break;
+                case 1:
+                    if (theta3 == 0)
+                        bestmodel += "x^2";
+                    else
+                        bestmodel += "+x^2";
+                    break;
+                case 0:
+                    break;
+                default:
+                    if (theta3 == 0)
+                        bestmodel += theta2 + "x^2";
+                    else
+                        bestmodel += theta2 > 0 ? "+" + theta2 + "x^2" : theta2 + "x^2";
+                    break;
+            }
+            
+            switch (theta1)
+            {
+                case -1:
+                    bestmodel += "-x";
+                    break;
+                case 1:
+                    if (theta3==0 && theta2==0)
+                        bestmodel += "x";
+                    else
+                        bestmodel += "+x";
+                    break;
+                case 0:
+                    break;
+                default:
+                    if (theta3 == 0 && theta2 == 0)
+                        bestmodel += theta1 + "x";
+                    else
+                        bestmodel += theta1 > 0 ? "+" + theta1 + "x" : theta1 + "x";
+                    break;
+            }
+            if (theta0 > 0)
+                bestmodel += "+" + theta0;
+            else if (theta0 < 0)
+                bestmodel += theta0;              
+            #endregion
+
             Console.WriteLine(bestmodel);
-            Console.WriteLine("Average error rate: " + errorVal / Xs.Count);
+            //error with rounded thetas:
+            errorVal = 0;
+            for (int i = 0; i < Xs.Count; i++)
+            {
+                errorVal += error(Xs[i], Ys[i]);
+            }
+            errorVal = errorVal / Xs.Count;
+            Console.WriteLine("Average error: " + errorVal);
             Console.WriteLine("Press enter if you want to apply nonlinear regression to another data file!");
             Console.ReadLine();
             Setup();
