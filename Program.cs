@@ -11,6 +11,13 @@ namespace GradDesc
         static List<double> Ys = new List<double>();
         static double theta0 = 0, theta1 = 0, theta2 = 0, theta3=0, theta4=0, alpha = 0.01, errorVal=0;
         static int numIterations = 5000;
+        
+        static double error(double x, double y)
+        { return hypothesis(x) - y; }
+        
+        static double hypothesis(double x)
+        {return theta4 * Math.Pow(x, 4) + theta3 * Math.Pow(x, 3) + theta2 * Math.Pow(x, 2) + theta1 * x + theta0;}
+        
         static void Main(string[] args)
         {
             Setup();
@@ -240,13 +247,6 @@ namespace GradDesc
             Console.WriteLine("Press enter if you want to apply nonlinear regression to another data file!");
             Console.ReadLine();
             Setup();
-        }
-
-        static double error(double x, double y)
-        { return hypothesis(x) - y; }
-        
-        static double hypothesis(double x)
-        {return theta4 * Math.Pow(x, 4) + theta3 * Math.Pow(x, 3) + theta2 * Math.Pow(x, 2) + theta1 * x + theta0;}
-
+        }   
     }
 }
